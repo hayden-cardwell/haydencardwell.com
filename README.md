@@ -45,4 +45,4 @@ The WAV file is hosted with the site in `public/assets/windows-xp-startup.wav`. 
 
 ## Resume version
 
-The public Resume link uses the October 26, 2026 rewrite from `Hayden_Cardwell_Resume.pdf`, retained byte-for-byte under the existing download URL. It lists CrowdStrike Certified Falcon Administrator and CrowdStrike Certified SIEM Engineer. The separate Certifications PDF contains the existing AWS certificates.
+The public Resume link uses the October 26, 2026 rewrite from `Hayden_Cardwell_Resume.pdf`, retained byte-for-byte under the existing download URL. It lists CrowdStrike Certified Falcon Administrator and CrowdStrike Certified SIEM Engineer. The Certifications link points to the [Credly badge profile](https://www.credly.com/users/hayden-cardwell/badges).
