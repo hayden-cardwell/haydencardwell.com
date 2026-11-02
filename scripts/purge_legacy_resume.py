@@ -38,7 +38,7 @@ try:
             if matches:
                 result = cloud.create_invalidation(
                     DistributionId=distribution["Id"],
-                    InvalidationBatch={"Paths": {"Quantity": 1, "Items": ["/*"]}, "CallerReference": str(time.time_ns())},
+                    InvalidationBatch={"Paths": {"Quantity": 1, "Items": ["/" + retired + "*"]}, "CallerReference": str(time.time_ns())},
                 )
                 item = {"distribution": distribution["Id"], "invalidation": result["Invalidation"]["Id"]}
                 report["invalidations"].append(item)
