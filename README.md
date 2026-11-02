@@ -43,6 +43,10 @@ The words “Windows XP startup sound” are an inline playback button. Audio lo
 
 The WAV file is hosted with the site in `public/assets/windows-xp-startup.wav`. Source: [Winhistory’s Windows startup-sound archive](https://www.winhistory.de/more/winstart/winstart_en.htm), [Windows XP recording](https://www.winhistory.de/more/winstart/down/oxp.wav).
 
-## Resume version
+## Public resume privacy
 
-The public Resume link uses the October 26, 2026 rewrite from `Hayden_Cardwell_Resume.pdf`, retained byte-for-byte under the existing download URL. It lists CrowdStrike Certified Falcon Administrator and CrowdStrike Certified SIEM Engineer. The Certifications link points to the [Credly badge profile](https://www.credly.com/users/hayden-cardwell/badges).
+The Resume link uses `public/docs/hayden-cardwell-resume.pdf`. Its contact line uses `admin@cardwell.cloud` and masks every phone digit except the first and last. The unredacted document and its original download path have been removed from the published Git history. Both CrowdStrike certifications remain listed.
+
+The deployment checks PDF text, annotations, metadata, and streams before uploading. Install `pypdf` and run `python3 scripts/check_public_resume.py` to run the same check locally. Keep private resume originals outside this repository. Re-clone older copies before contributing so obsolete history is not reintroduced.
+
+The manual “Purge retired resume copies” workflow attempts to delete S3 versions of the retired object and invalidate matching CloudFront distributions using the existing deployment account. Its result reports any permissions that prevented cleanup.

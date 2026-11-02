@@ -6,15 +6,30 @@ on:
     - main
   workflow_dispatch:
 
+concurrency:
+  group: website-deployment
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: AWS
     steps:
     - uses: actions/checkout@master
+    - run: python3 -m pip install pypdf
+    - name: Check public resume privacy
+      run: python3 scripts/check_public_resume.py
     - run: python3 build.py
     - run: >
         aws s3 sync ./public/ s3://${{ secrets.AWS_S3_BUCKET }}/ --acl public-read --follow-symlinks --delete
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-east-1'
+    - name: Avoid caching the public resume
+      run: >
+        aws s3 cp ./public/docs/hayden-cardwell-resume.pdf s3://${{ secrets.AWS_S3_BUCKET }}/docs/hayden-cardwell-resume.pdf
+        --acl public-read --content-type application/pdf --cache-control no-store
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
