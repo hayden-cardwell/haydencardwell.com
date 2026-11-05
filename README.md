@@ -35,7 +35,9 @@ The list is currently empty. No placeholder articles are published. To keep a dr
 
 ## Hosting
 
-The existing AWS workflow deploys only `public/` to S3 when `main` is pushed, or when run manually. It then refreshes the CloudFront cache and waits for the update to reach edge locations. It retains the existing GitHub environment and secret names. All page links use explicit HTML paths, so blog pages require no new CloudFront routing configuration.
+The existing AWS workflow deploys only `public/` to S3 when `main` is pushed, or when run manually. It retains the existing GitHub environment and secret names. All page links use explicit HTML paths, so blog pages require no new CloudFront routing configuration.
+
+CloudFront can keep serving previously cached HTML after a successful upload. The deployment account currently lacks CloudFront cache-invalidation permission, so immediate updates require an authorized cache invalidation or waiting for cache expiry.
 
 Local preview does not update AWS. Deployment occurs when changes are pushed to `main`. The original Downloads checkout, including its uncommitted edits, is unchanged.
 
