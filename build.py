@@ -36,7 +36,7 @@ def post_list(posts):
     entries = []
     for post in posts:
         entries.append(
-            f'<li><a href="/writing/{post["slug"]}.html">'
+            f'<li><a target="_blank" rel="noopener noreferrer" href="/writing/{post["slug"]}.html">'
             f'<span class="post-list-title">{escape(post["title"])}</span>'
             f'<time datetime="{post["date"]}">{formatted_date(post["date"])}</time></a></li>'
         )

@@ -23,6 +23,8 @@ Open http://127.0.0.1:8765 in Firefox. Serve `public/`, not the repository root.
 
 Run `python3 build.py` after editing templates or posts. Generated pages in `public/` are committed, so deployment needs no build dependency.
 
+All navigation and document links open a new tab with `noopener noreferrer`. The shared `<base target="_blank">` also covers links in future article content; the “Skip to content” shortcut explicitly stays in the current page.
+
 ## Add a post
 
 1. Write the article as an HTML fragment in `content/posts/your-post-slug.html`. Use paragraphs (`<p>`), section headings (`<h2>`), lists, links, and other standard article elements. The shared template supplies the page title, date, page structure; do not add a second `<h1>`.
