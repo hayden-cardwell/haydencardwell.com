@@ -29,6 +29,11 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; }
 .sound-trigger { display: inline; padding: 0; border: 0; border-radius: 0; background: none; color: inherit; font: inherit; text-align: inherit; text-decoration: underline; text-decoration-color: #b6b4aa; text-decoration-thickness: 1px; text-underline-offset: 4px; cursor: pointer; }
 .sound-trigger:hover, .sound-trigger[aria-pressed="true"] { color: var(--accent); text-decoration-color: currentColor; }
 .sound-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.reset-trigger { display: inline-flex; vertical-align: middle; align-items: center; justify-content: center; width: 24px; height: 24px; margin-left: 5px; padding: 0; border: 1px solid rgba(115,116,107,.25); border-radius: 50%; background: rgba(255,255,255,.45); color: var(--muted); font: 17px/1 var(--sans); cursor: pointer; }
+.reset-trigger[hidden] { display: none; }
+.reset-trigger:hover { background: rgba(255,255,255,.8); color: var(--ink); border-color: var(--muted); }
+.reset-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.reset-trigger:disabled { cursor: default; opacity: .5; }
 .audio-status:empty { display: none; }
 .biography .audio-status { color: var(--accent); font-size: 13px; }
 .portrait { grid-area: portrait; align-self: center; display: block; width: 280px; height: 340px; object-fit: cover; object-position: center 35%; filter: grayscale(1); }
@@ -90,4 +95,25 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; }
   .introduction, .writing-page, .post-page { padding-block: 30px; }
   .post { max-width: none; margin-top: 0; }
   a { color: inherit; }
+}
+
+/* Waveform-driven Bliss and portrait reveal. */
+body { --xp-reveal: 0; }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1;
+  background: #4d8cce url("https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png") center center / cover no-repeat;
+  opacity: var(--xp-reveal);
+}
+.introduction { position: relative; isolation: isolate; }
+.introduction::before {
+  content: ""; position: absolute; inset: -12px -42px;
+  background: rgba(255,255,255,.80);
+  border: 1px solid rgba(255,255,255,.45);
+  box-shadow: 0 20px 80px rgba(15,38,52,.14);
+  z-index: -1; opacity: var(--xp-reveal);
+}
+.portrait { filter: grayscale(calc(1 - var(--xp-reveal))); }
+@media (max-width:760px) { .introduction::before { inset: 0 -12px; } }
+@media (prefers-reduced-motion:reduce) {
+  body.xp-mode { --xp-reveal: 1 !important; }
 }

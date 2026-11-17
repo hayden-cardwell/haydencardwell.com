@@ -1,6 +1,6 @@
 # haydencardwell.com
 
-A small static personal website. White, system fonts, no navigation bar, no external font or framework requests. A small script handles the optional click-to-play startup sound. The portrait is rendered in black and white using a CSS filter; the original image file is preserved.
+A small static personal website. White, system fonts, no navigation bar, no external font or framework requests. A small script handles the optional click-to-play startup sound and a waveform-driven reveal of the Windows XP Bliss wallpaper. The portrait starts in black and white and fades into its original color; a translucent white panel keeps the content readable.
 
 ## Preview
 
@@ -43,9 +43,9 @@ Local preview does not update AWS. Deployment occurs when changes are pushed to 
 
 ## Startup sound
 
-The words “Windows XP startup sound” are an inline playback button. Audio loads only after a click; clicking again stops it, and another click replays it from the beginning. The native button supports keyboard activation and reports playback state to assistive technology.
+The words “Windows XP startup sound” are an inline playback button. Clicking reveals the Bliss wallpaper and portrait color in sync with the recording’s measured waveform. Clicking again stops playback, and another click replays the reveal. The small adjacent back arrow plays the recording and visual reveal in reverse, including from partway through playback. Audio metadata is preloaded; playback requires a click. The native buttons support keyboard activation and accessible labels, and reduced-motion preferences show the final appearance immediately.
 
-The WAV file is hosted with the site in `public/assets/windows-xp-startup.wav`. Source: [Winhistory’s Windows startup-sound archive](https://www.winhistory.de/more/winstart/winstart_en.htm), [Windows XP recording](https://www.winhistory.de/more/winstart/down/oxp.wav).
+The WAV file is hosted with the site in `public/assets/windows-xp-startup.wav`; `windows-xp-startup-reversed.wav` contains the same stereo frames in reverse order. The smoothed 20 ms waveform samples are embedded in `startup-sound.js` and are driven by the audio playback clock. The wallpaper uses the [Bliss image on Wikimedia](https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png). Source: [Winhistory’s Windows startup-sound archive](https://www.winhistory.de/more/winstart/winstart_en.htm), [Windows XP recording](https://www.winhistory.de/more/winstart/down/oxp.wav).
 
 ## Public resume privacy
 
