@@ -37,7 +37,9 @@ The list is currently empty. No placeholder articles are published. To keep a dr
 
 The existing AWS workflow deploys only `public/` to S3 when `main` is pushed, or when run manually. It retains the existing GitHub environment and secret names. All page links use explicit HTML paths, so blog pages require no new CloudFront routing configuration.
 
-CloudFront can keep serving previously cached HTML after a successful upload. The deployment account currently lacks CloudFront cache-invalidation permission, so immediate updates require an authorized cache invalidation or waiting for cache expiry.
+After every successful S3 upload, the workflow invalidates `/*` on CloudFront distribution `E3W4QWZSEG1C6F` in account `740365603924` and waits for completion before reporting success. Pushes to `main` and manual runs both refresh the cache automatically. Publication normally takes a few minutes, including GitHub runner startup and CloudFront propagation; already-open pages still need to be refreshed.
+
+The existing `github-actions` IAM user has `cloudfront:CreateInvalidation` and `cloudfront:GetInvalidation` only for this distribution. No CloudFront listing or distribution-editing permission is needed. Deployments run serially so a newer push does not interrupt an upload or its invalidation.
 
 Local preview does not update AWS. Deployment occurs when changes are pushed to `main`. The original Downloads checkout, including its uncommitted edits, is unchanged.
 

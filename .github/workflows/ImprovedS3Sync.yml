@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: website-deployment
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -34,3 +34,20 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'us-east-1'
+    - name: Refresh CloudFront and wait until the site is current
+      timeout-minutes: 12
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-east-1'
+        CLOUDFRONT_DISTRIBUTION_ID: E3W4QWZSEG1C6F
+      run: |
+        set -euo pipefail
+        invalidation_id=$(aws cloudfront create-invalidation \
+          --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
+          --paths '/*' --query 'Invalidation.Id' --output text)
+        echo "Waiting for CloudFront invalidation $invalidation_id"
+        aws cloudfront wait invalidation-completed \
+          --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
+          --id "$invalidation_id"
+        echo "CloudFront cache refresh completed." >> "$GITHUB_STEP_SUMMARY"
